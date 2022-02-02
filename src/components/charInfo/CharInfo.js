@@ -15,7 +15,7 @@ const CharInfo = (props) => {
 
   useEffect(() => {
     updateChar();
-    console.log("update");
+    // console.log("update");
   }, [props.charId]);
 
   const onCharLoaded = (newChar) => {

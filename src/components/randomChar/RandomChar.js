@@ -67,9 +67,9 @@ const RandomChar = () => {
 const View = ({ char }) => {
   const { name, description, thumbnail, homepage, wiki } = char;
   let classNamesImg = "randomchar__img";
-  // if (thumbnail.indexOf("image_not_available") > -1) {
-  //   classNamesImg += " randomchar__img_not_available";
-  // }
+  if (thumbnail.indexOf("image_not_available") > -1) {
+    classNamesImg += " randomchar__img_not_available";
+  }
   return (
     <div className="randomchar__block">
       <img src={thumbnail} alt="Random character" className={classNamesImg} />
