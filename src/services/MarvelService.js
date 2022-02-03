@@ -5,6 +5,8 @@ const useMarvelService = () => {
   const _apiBase = "https://gateway.marvel.com:443/v1/public/";
   const _apiKey = "apikey=5244d0b27c6a8457f1fd5729442bc99f";
   const _baseOffset = 210;
+  const _apiBaseComics =
+    "https://gateway.marvel.com:443/v1/public/comics?apikey=";
 
   const getAllCharacters = async (offset = _baseOffset) => {
     const res = await request(
@@ -12,6 +14,18 @@ const useMarvelService = () => {
     );
 
     return res.data.results.map(_transformCharacter);
+  };
+
+  const getAllComics = async (offset = 199) => {
+    const res = await request(
+      `${_apiBase}comics?orderBy=issueNumber&limit=8&offset=${offset}&${_apiKey}`
+    );
+    return res.data.results.map(_transformComics);
+  };
+
+  const getComics = async (id) => {
+    const res = await request(`${_apiBase}comics/${id}?${_apiKey}`);
+    return _transformComics(res.data.results[0]);
   };
 
   const getCharacter = async (id) => {
@@ -35,12 +49,28 @@ const useMarvelService = () => {
     };
   };
 
+  const _transformComics = (comics) => {
+    return {
+      id: comics.id,
+      title: comics.title,
+      description: comics.description || "There is no description",
+      pageCount: comics.pageCount
+        ? `${comics.pageCount} p.`
+        : "No information about the number of pages",
+      thumbnail: comics.thumbnail.path + "." + comics.thumbnail.extension,
+      language: comics.textObjects.language || "en-us",
+      price: comics.prices.price ? `${comics.prices.price}$` : "not available",
+    };
+  };
+
   return {
     loading,
     error,
     getAllCharacters,
     getCharacter,
     clearError,
+    getAllComics,
+    getComics,
   };
 };
 
