@@ -1,3 +1,8 @@
+#About project
+Go to the hawks branch and clone the project.
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
